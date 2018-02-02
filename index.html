@@ -9,26 +9,26 @@
         padding: 0;
         background-color: #FFFFFF;
       }
-
       <!-- These are purely cosmetic and the app would work without them,
 	   but not look as good ;-) -->
-      <!-- form { background: #0000FF; position: fixed; bottom:0; width: 100%; } -->
-      form { background: #a0d7ff; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { background: #FFFFFF; border: 0; padding: 10px; width:90%; margin-right: 0.5%; }
-      form button { width: 6%; background: #009DFF; }
-
-      #messages { list-style-type : none;}
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 6%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type : none; margin: 0; padding:0;}
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
 
     </style>
   </head>
 
-
   <!-- This line loads the socket.io library -->
   <script src="/socket.io/socket.io.js"></script>
   
-
   <body>
-    <ul id="messages"></ul> <!-- An unordered list of messages -->
+    <!-- The body is where we define what gets put on the page -->
+    <ul id="messages"></ul> <!-- A list of messages that we append to using javascript -->
     <form id="chat form" action="">
       <input id="message" autocomplete="off" /><button>Send</button>
     </form>
