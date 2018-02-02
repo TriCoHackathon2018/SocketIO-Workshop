@@ -1,0 +1,42 @@
+<!-- See https://socket.io/get-started/chat/ for more -->
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>SocketIO Example</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #FFFFFF;
+      }
+
+      <!-- These are purely cosmetic and the app would work without them,
+	   but not look as good ;-) -->
+      form { background: #0000FF; position: fixed; bottom:0; width: 100%; }
+      form input { background: #a0d7ff; border: 0; padding: 10px; width:90%; margin-right: 0.5%; }
+      form button { width: 6%; background: #009DFF; }
+      #messages { list-style-type : none;}
+
+    </style>
+  </head>
+
+
+  <!-- This line loads the socket.io library -->
+  <script src="/socket.io/socket.io.js"></script>
+  
+
+  <body>
+    <ul id="messages"></ul> <!-- An unordered list of messages -->
+    <form id="chat form" action="">
+      <input id="message" autocomplete="off" /><button>Send</button>
+    </form>
+  </body>
+  
+  
+  <!-- The main js program. This references the form defined above,
+       so it needs to be included below it-->
+  <script src="/js/client.js"></script>
+  
+  
+      
+</html>
