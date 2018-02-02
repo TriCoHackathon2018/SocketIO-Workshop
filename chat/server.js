@@ -20,14 +20,13 @@ app.get("/", function(req, res) {
 // When a user connects, they are assigned their own socket object
 // which the server uses to send them messages.
 io.on('connection', function(socket) {
-    console.log("a user connected");
 
     // Note that this is a local variable,
     // so it's only this client's username.
     var username = "";
     
     socket.on("disconnect", function() {
-	console.log("a user disconnected");
+	console.log(username + " disconnected");
     });
 
     // These events happen when the client does "socket.emit("event", data)"
@@ -50,6 +49,7 @@ io.on('connection', function(socket) {
     
     socket.on("setUsername", function(newName) {
 	username = newName;
+	console.log(username + " connected");
     });
 
 });
