@@ -4,11 +4,6 @@ var app = express();
 var http = require("http").Server(app);
 var port = 8000;
 
-
-// Get a Unique User Identifier generator to keep track of clients more easily
-var UUID = require("uuid/v4");
-
-
 // Initializes the server's global socket.io object
 var io = require("socket.io")(http);
 
@@ -27,9 +22,9 @@ app.get("/", function(req, res) {
 io.on('connection', function(socket) {
     console.log("a user connected");
 
-    // Give the user a unique ID
-    var ID = UUID();
-    socket.emit("onConnection", ID);
+    // Note that this is a local variable,
+    // so it's only this client's username.
+    var username = "";
     
     socket.on("disconnect", function() {
 	console.log("a user disconnected");
@@ -39,17 +34,24 @@ io.on('connection', function(socket) {
     // Note that some events are reserved. See them at
     // https://socket.io/docs/emit-cheatsheet/
     
-    socket.on("message", function(data) {
+    socket.on("message", function(message) {
 	// Receive a message from the client (data is the message)
 
 	//... and then send it to everyone else who is connected
 	// Note that this doesn't send it to the
 	// current client. To do that, use io.emit
+	var data = {
+	    username: username,
+	    message: message
+	};
 	socket.broadcast.emit("message", data);
 
     });
     
-    
+    socket.on("setUsername", function(newName) {
+	username = newName;
+    });
+
 });
 
 

@@ -1,17 +1,15 @@
 // Makes the socket.io object for the client to use.
 var socket = io();
 
+var username;
+window.onload = function() {
+    username = window.prompt("Enter a Username");
+    socket.emit("setUsername", username);
+};
 
 // Grabs the html element with the id "chat form"
 var chatForm = document.getElementById("chat form");
 
-
-// Every client has their own unique ID given by the server
-var ID;
-socket.on("onConnection", function(newID) {
-    // Gets this client's ID
-    ID = newID;
-});
 
 // Whenever the send button is pressed, this function is called
 chatForm.onsubmit = function() {
@@ -22,7 +20,11 @@ chatForm.onsubmit = function() {
     var message = chatForm.message.value;
 
     // First of all, display the message on our screen
-    postMessage(message);
+    var data = {
+	username : username,
+	message : message
+    };
+    postMessage(data);
 
     // Send the message to the server
     socket.emit("message", message);
@@ -42,9 +44,9 @@ socket.on("message", postMessage);
 // Note that it's okay to define postMessage after using it
 // because function definitions are hoisted to the top
 // of the file before being used.
-function postMessage(message) {
-    if (message) {
-	console.log(message);
+function postMessage(data) {
+    if (data) {
+	console.log(data);
 
 	// Grab a reference to the list of past messages
 	var ul = document.getElementById("messages");
@@ -53,6 +55,7 @@ function postMessage(message) {
 	var li = document.createElement("li");
 
 	// Add text to the newly created node
+	var message = data.username + ": " + data.message;
 	li.appendChild(document.createTextNode(message));
 
 	// Append the node to the list
